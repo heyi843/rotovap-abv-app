@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <meta
+      name="description"
+      content="旋蒸后酒精度调整计算 App，支持加水降度、加高酒度酒液升度和纯酒精守恒换算。"
+    />
+    <meta name="theme-color" content="#132321" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="旋蒸回调" />
+    <title>旋蒸回调 | 酒精度调整 App</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="grain"></div>
+    <div class="glow glow-left"></div>
+    <div class="glow glow-right"></div>
+
+    <div class="shell">
+      <header class="hero panel">
+        <div class="hero-copy">
+          <p class="eyebrow">Rotovap Proof Dial</p>
+          <h1>旋蒸回调</h1>
+          <p class="hero-text">
+            把旋蒸后的酒精度换算、加水降度和升度补酒，收进一个随手就能开的手机 App。
+          </p>
+        </div>
+
+        <div class="hero-actions">
+          <button id="installAppBtn" class="ghost-button is-hidden" type="button">
+            安装 App
+          </button>
+          <button id="resetBtn" class="ghost-button" type="button">
+            恢复默认
+          </button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel controls">
+          <div class="section-head">
+            <p class="section-kicker">Mode</p>
+            <h2>选择计算方式</h2>
+          </div>
+
+          <div class="mode-switch" role="tablist" aria-label="Calculation Modes">
+            <button
+              class="mode-button is-active"
+              type="button"
+              data-mode="water"
+              aria-selected="true"
+            >
+              加水降度
+            </button>
+            <button
+              class="mode-button"
+              type="button"
+              data-mode="fortify"
+              aria-selected="false"
+            >
+              升度补酒
+            </button>
+            <button
+              class="mode-button"
+              type="button"
+              data-mode="conserve"
+              aria-selected="false"
+            >
+              守恒换算
+            </button>
+          </div>
+
+          <p id="modeHint" class="mode-hint">
+            已知当前体积和当前酒精度，直接算要加多少水才能降到目标度数。
+          </p>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>输入单位</span>
+              <select id="unitSelect">
+                <option value="ml">mL</option>
+                <option value="l">L</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>当前体积</span>
+              <input
+                id="currentVolumeInput"
+                type="number"
+                min="0"
+                step="0.1"
+                inputmode="decimal"
+                placeholder="例如 500"
+              />
+            </label>
+
+            <label class="field">
+              <span>当前酒精度 %ABV</span>
+              <input
+                id="currentAbvInput"
+                type="number"
+                min="0"
+                max="100"
+                step="0.1"
+                inputmode="decimal"
+                placeholder="例如 32"
+              />
+            </label>
+
+            <label class="field">
+              <span>目标酒精度 %ABV</span>
+              <input
+                id="targetAbvInput"
+                type="number"
+                min="0"
+                max="100"
+                step="0.1"
+                inputmode="decimal"
+                placeholder="例如 18"
+              />
+            </label>
+
+            <label id="fortifierField" class="field is-hidden">
+              <span>补入酒液酒精度 %ABV</span>
+              <input
+                id="fortifierAbvInput"
+                type="number"
+                min="0"
+                max="100"
+                step="0.1"
+                inputmode="decimal"
+                placeholder="例如 95"
+              />
+            </label>
+          </div>
+
+          <div class="preset-block">
+            <p class="mini-label">目标度数快捷键</p>
+            <div class="chip-row">
+              <button class="chip" type="button" data-target-abv="8">8%</button>
+              <button class="chip" type="button" data-target-abv="12">12%</button>
+              <button class="chip" type="button" data-target-abv="15">15%</button>
+              <button class="chip" type="button" data-target-abv="18">18%</button>
+              <button class="chip" type="button" data-target-abv="25">25%</button>
+              <button class="chip" type="button" data-target-abv="40">40%</button>
+            </div>
+          </div>
+
+          <div id="fortifierPresets" class="preset-block is-hidden">
+            <p class="mini-label">补酒酒精度快捷键</p>
+            <div class="chip-row">
+              <button class="chip" type="button" data-fortifier-abv="40">40%</button>
+              <button class="chip" type="button" data-fortifier-abv="52">52%</button>
+              <button class="chip" type="button" data-fortifier-abv="65">65%</button>
+              <button class="chip" type="button" data-fortifier-abv="95">95%</button>
+            </div>
+          </div>
+
+          <div class="utility-row">
+            <button id="copyBtn" class="primary-button" type="button">
+              复制结果
+            </button>
+            <button id="saveBtn" class="secondary-button" type="button">
+              保存当前批次
+            </button>
+          </div>
+
+          <div id="errorBox" class="error-box" aria-live="polite"></div>
+
+          <div class="note-card">
+            <p class="mini-label">使用说明</p>
+            <p>
+              这里按体积分数近似计算，适合日常快速回调。若你需要更严谨的最终出品值，建议最后仍以密度计或实测为准。
+            </p>
+          </div>
+        </section>
+
+        <section class="panel results">
+          <div class="section-head">
+            <p class="section-kicker">Result</p>
+            <h2>当前结论</h2>
+          </div>
+
+          <div class="result-card">
+            <p id="resultKicker" class="result-kicker">加水降度</p>
+            <h3 id="headlineResult">加水 0 mL</h3>
+            <p id="resultSummary" class="result-summary">
+              输入数值后，这里会直接告诉你要怎么调。
+            </p>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric-card">
+              <span>当前纯酒精量</span>
+              <strong id="pureAlcoholMetric">0 mL</strong>
+              <small>按输入体积和当前度数计算</small>
+            </div>
+            <div class="metric-card">
+              <span>目标总量</span>
+              <strong id="finalVolumeMetric">0 mL</strong>
+              <small>回调后最终理论体积</small>
+            </div>
+            <div class="metric-card">
+              <span>变化量</span>
+              <strong id="changeMetric">0 mL</strong>
+              <small id="changeCaption">和当前体积相比</small>
+            </div>
+            <div class="metric-card">
+              <span>当前批次概览</span>
+              <strong id="batchMetric">0 mL @ 0%</strong>
+              <small id="batchCaption">目标还未设定</small>
+            </div>
+          </div>
+
+          <div class="equation-card">
+            <p class="mini-label">本次计算逻辑</p>
+            <p id="equationNote">
+              纯酒精量守恒：当前体积 × 当前酒精度 = 目标体积 × 目标酒精度。
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <section class="panel history">
+        <div class="history-head">
+          <div>
+            <p class="section-kicker">Recent Batches</p>
+            <h2>最近记录</h2>
+          </div>
+          <button id="clearHistoryBtn" class="ghost-button" type="button">
+            清空记录
+          </button>
+        </div>
+        <div id="historyList" class="history-list">
+          <p class="empty-history">还没有保存记录。算出一批后点“保存当前批次”就会出现在这里。</p>
+        </div>
+      </section>
+    </div>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
