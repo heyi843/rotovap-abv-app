@@ -1,4 +1,4 @@
-const CACHE_NAME = "rotovap-proof-dial-v1";
+const CACHE_NAME = "rotovap-proof-dial-v2";
 const APP_SHELL = [
   "./",
   "./index.html",
