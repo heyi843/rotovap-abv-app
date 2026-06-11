@@ -211,7 +211,7 @@ h3 {
 
 .mode-switch {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.55rem;
   margin-bottom: 0.85rem;
 }
@@ -234,11 +234,12 @@ h3 {
 
 .mode-button {
   min-height: 3rem;
-  padding: 0.8rem 0.9rem;
+  padding: 0.8rem 0.7rem;
   border-radius: 999px;
   color: var(--muted);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.04);
+  white-space: nowrap;
 }
 
 .mode-button:hover,

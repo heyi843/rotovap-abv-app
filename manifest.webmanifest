@@ -1,7 +1,7 @@
 {
   "name": "旋蒸回调",
   "short_name": "旋蒸回调",
-  "description": "旋蒸后酒精度调整计算 App，支持加水降度、升度补酒和纯酒精守恒换算。",
+  "description": "旋蒸后酒精度调整计算 App，支持加水降度、升度补酒、酒精计温度校正和纯酒精守恒换算。",
   "lang": "zh-CN",
   "start_url": "./index.html",
   "scope": "./",
