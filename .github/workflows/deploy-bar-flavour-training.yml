@@ -31,22 +31,8 @@ jobs:
       - name: Prepare Pages artifact
         run: |
           mkdir -p public
+          cp -R rotovap-abv-app/. public/
           cp -R bar-flavour-app public/bar-flavour-app
-          cp -R rotovap-abv-app public/rotovap-abv-app
-          cat > public/index.html <<'HTML'
-          <!doctype html>
-          <html lang="zh-CN">
-            <head>
-              <meta charset="utf-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1" />
-              <meta http-equiv="refresh" content="0; url=./bar-flavour-app/" />
-              <title>BAR FLAVOUR Training App</title>
-            </head>
-            <body>
-              <p><a href="./bar-flavour-app/">Open BAR FLAVOUR Training App</a></p>
-            </body>
-          </html>
-          HTML
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
