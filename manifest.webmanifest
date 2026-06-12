@@ -1,32 +1,20 @@
 {
-  "name": "BAR FLAVOUR 培训手册",
-  "short_name": "BAR Training",
-  "description": "BAR FLAVOUR 培训手册 App，支持手机查看、搜索、离线访问和培训内容编辑。",
+  "name": "旋蒸回调",
+  "short_name": "旋蒸回调",
+  "description": "旋蒸后酒精度调整计算 App，支持加水降度、升度补酒、酒精计温度校正和纯酒精守恒换算。",
   "lang": "zh-CN",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#eef2f7",
-  "theme_color": "#111827",
+  "background_color": "#132321",
+  "theme_color": "#132321",
   "icons": [
     {
-      "src": "./assets/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any"
-    },
-    {
-      "src": "./assets/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./assets/icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
     }
   ]
 }

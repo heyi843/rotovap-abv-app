@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="BAR FLAVOUR 培训手册 App，支持手机查看、搜索、离线访问和培训内容编辑。"
+    />
+    <meta name="theme-color" content="#111827" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="BAR Training" />
+    <title>BAR FLAVOUR 培训手册 App</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./assets/icon-180.png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="appShell" class="app-shell">
+      <header class="topbar">
+        <div class="brand-lockup">
+          <img src="./assets/icon.svg" alt="" class="brand-icon" />
+          <div>
+            <p>BAR FLAVOUR</p>
+            <h1>培训手册</h1>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button id="installButton" class="icon-button is-hidden" type="button" title="安装 App">
+            <i data-lucide="smartphone"></i>
+          </button>
+          <button id="exportButton" class="icon-button" type="button" title="导出 Markdown">
+            <i data-lucide="download"></i>
+          </button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="manual-pane" aria-label="培训手册">
+          <div class="searchbar">
+            <i data-lucide="search"></i>
+            <input id="searchInput" type="search" placeholder="搜索酒款、流程、话术..." autocomplete="off" />
+            <button id="clearSearchButton" class="icon-button small" type="button" title="清除搜索">
+              <i data-lucide="x"></i>
+            </button>
+          </div>
+
+          <div class="metrics-strip" id="metricsStrip"></div>
+
+          <div class="module-rail" id="moduleRail" aria-label="章节"></div>
+
+          <article class="reader-panel">
+            <div class="reader-header">
+              <div>
+                <p id="sectionIndexLabel" class="overline">模块 01</p>
+                <h2 id="sectionTitle">载入中</h2>
+              </div>
+              <button id="editCurrentButton" class="text-button" type="button">
+                <i data-lucide="pencil"></i>
+                编辑
+              </button>
+            </div>
+            <div id="sectionBody" class="markdown-body"></div>
+          </article>
+        </section>
+
+        <section class="editor-pane" aria-label="编辑培训内容">
+          <div class="editor-toolbar">
+            <div>
+              <p class="overline">内容编辑</p>
+              <h2>Markdown 源稿</h2>
+            </div>
+            <div class="editor-actions">
+              <button id="saveButton" class="primary-button" type="button">
+                <i data-lucide="save"></i>
+                保存
+              </button>
+              <button id="previewButton" class="secondary-button" type="button">
+                <i data-lucide="eye"></i>
+                预览
+              </button>
+            </div>
+          </div>
+
+          <textarea id="editor" spellcheck="false" aria-label="Markdown 编辑器"></textarea>
+
+          <div class="backup-panel">
+            <button id="importButton" class="secondary-button" type="button">
+              <i data-lucide="upload"></i>
+              导入
+            </button>
+            <button id="copyButton" class="secondary-button" type="button">
+              <i data-lucide="copy"></i>
+              复制
+            </button>
+            <button id="resetButton" class="danger-button" type="button">
+              <i data-lucide="rotate-ccw"></i>
+              恢复原稿
+            </button>
+            <input id="importFile" type="file" accept=".md,.markdown,text/markdown,text/plain" hidden />
+          </div>
+        </section>
+      </main>
+
+      <nav class="tabbar" aria-label="主导航">
+        <button class="tab-button is-active" type="button" data-view="manual">
+          <i data-lucide="book-open"></i>
+          <span>手册</span>
+        </button>
+        <button class="tab-button" type="button" data-view="editor">
+          <i data-lucide="square-pen"></i>
+          <span>编辑</span>
+        </button>
+        <button class="tab-button" type="button" data-view="tools">
+          <i data-lucide="archive"></i>
+          <span>备份</span>
+        </button>
+      </nav>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="./vendor/marked.umd.js"></script>
+    <script src="./vendor/lucide.js"></script>
+    <script src="./content.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
